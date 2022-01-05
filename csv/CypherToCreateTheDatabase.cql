@@ -19,6 +19,13 @@ WITH n LIMIT 10000
 OPTIONAL MATCH (n)-[r]->()
 DELETE n,r;
 
+//CALL db.constraints() YIELD name RETURN "DROP CONSTRAINT " + name + " IF EXISTS;";
+
+DROP CONSTRAINT unique_Genre_id IF EXISTS;
+DROP CONSTRAINT unique_Keyword_id IF EXISTS;
+DROP CONSTRAINT unique_Movie_id IF EXISTS;
+DROP CONSTRAINT unique_Person_id IF EXISTS;
+
 // test
 //LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/alastair1970/neo4j-movies-template/master/csv/person_node.csv" AS r FIELDTERMINATOR ';'
 //WITH r LIMIT 10 WHERE r.`id:ID(Person)` IS NOT NULL
@@ -30,7 +37,7 @@ DELETE n,r;
 //RETURN r.`:START_ID(Person)`, r.`:END_ID(Movie)`, SPLIT(r.role, '/')
 
 // Upload nodes ------------------------------------------------------
-CREATE CONSTRAINT FOR (g:Genre) REQUIRE g.id IS UNIQUE;
+CREATE CONSTRAINT unique_Genre_id FOR (g:Genre) REQUIRE g.id IS UNIQUE;
 LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/alastair1970/neo4j-movies-template/master/csv/genre_node.csv" AS r FIELDTERMINATOR ';'
 CREATE (g:Genre {
   id: toInteger(r.`id:ID(Genre)`),
@@ -38,7 +45,7 @@ CREATE (g:Genre {
 });
 
 // Upload nodes ------------------------------------------------------
-CREATE CONSTRAINT FOR (k:Keyword) REQUIRE k.id IS UNIQUE;
+CREATE CONSTRAINT unique_Keyword_id FOR (k:Keyword) REQUIRE k.id IS UNIQUE;
 LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/alastair1970/neo4j-movies-template/master/csv/keyword_node.csv" AS r FIELDTERMINATOR ';'
 CREATE (k:Keyword {
   id: toInteger(r.`id:ID(Keyword)`),
@@ -46,7 +53,7 @@ CREATE (k:Keyword {
 });
 
 // Upload nodes ------------------------------------------------------
-CREATE CONSTRAINT FOR (m:Movie) REQUIRE m.id IS UNIQUE;
+CREATE CONSTRAINT unique_Movie_id FOR (m:Movie) REQUIRE m.id IS UNIQUE;
 LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/alastair1970/neo4j-movies-template/master/csv/movie_node.csv" AS r FIELDTERMINATOR ';'
 CREATE (m:Movie {
   id: toInteger(r.`id:ID(Movie)`),
@@ -59,7 +66,7 @@ CREATE (m:Movie {
 });
 
 // ------------------------------------------------------
-CREATE CONSTRAINT FOR (p:Person) REQUIRE p.id IS UNIQUE;
+CREATE CONSTRAINT unique_Person_id FOR (p:Person) REQUIRE p.id IS UNIQUE;
 LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/alastair1970/neo4j-movies-template/master/csv/person_node.csv" AS r FIELDTERMINATOR ';'
 CREATE (p:Person {
   id: toInteger(r.`id:ID(Person)`),
