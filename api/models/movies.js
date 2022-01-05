@@ -69,7 +69,7 @@ const getById = function (session, movieId, userId) {
     'OPTIONAL MATCH (movie)<-[my_rated:RATED]-(me:User {id: $userId})',
     'OPTIONAL MATCH (movie)<-[r:ACTED_IN]-(a:Person)',
     'OPTIONAL MATCH (related:Movie)<--(a:Person) WHERE related <> movie',
-    'OPTIONAL MATCH (movie)-[:IN_GENRE]->(genre:Genre)',
+    'OPTIONAL MATCH (movie)-[:HAS_GENRE]->(genre:Genre)',
     'OPTIONAL MATCH (movie)<-[:DIRECTED]-(d:Person)',
     'OPTIONAL MATCH (movie)<-[:PRODUCED]-(p:Person)',
     'OPTIONAL MATCH (movie)<-[:WRITER_OF]-(w:Person)',
@@ -137,7 +137,7 @@ const getByActor = function (session, id) {
 // get a movie by genre
 const getByGenre = function(session, genreId) {
   const query = [
-    'MATCH (movie:Movie)-[:IN_GENRE]->(genre)',
+    'MATCH (movie:Movie)-[:HAS_GENRE]->(genre)',
     'WHERE toLower(genre.name) = toLower($genreId) OR id(genre) = toInteger($genreId)', // while transitioning to the sandbox data             
     'RETURN movie'
   ].join('\n');
