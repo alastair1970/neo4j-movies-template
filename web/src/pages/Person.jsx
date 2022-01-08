@@ -41,7 +41,7 @@ class Person extends React.Component {
             <div className="row">
               <div className="small-12 medium-3 columns nt-person-aside">
                 <img className="nt-person-poster"
-                  src={detail.posterImage}
+                  src={detail.poster_image}
                   alt="" />
               </div>
               <div className="small-12 medium-9 columns nt-person-main">
@@ -82,10 +82,10 @@ class Person extends React.Component {
           actors.map(a => {
             return (
               <div key={a.id}>
-                <Link to={`/person/${a.id}`}>
-                  <img src={a.posterImage} alt="" />
+                <Link to={`/person/${a.id.low}`}>
+                  <img src={a.poster_image} alt="" />
                 </Link>
-                <div className="nt-carousel-actor-name"><Link to={`/person/${a.id}`}>{a.name}</Link></div>
+                <div className="nt-carousel-actor-name"><Link to={`/person/${a.id.low}`}>{a.name}</Link></div>
                 <div className="nt-carousel-actor-role">{a.role}</div>
               </div>
             );
@@ -115,11 +115,11 @@ class Person extends React.Component {
               {
                 movies.map(m => {
                   return (
-                    <div key={m.id}>
-                      <Link to={`/movie/${m.id}`}>
-                        <img src={m.posterImage} alt="" />
+                    <div key={m.id.low}>
+                      <Link to={`/movie/${m.id.low}`}>
+                        <img src={m.poster_image} alt="" />
                       </Link>
-                      <div className="nt-carousel-movie-title"><Link to={`/movie/${m.id}`}>{m.name}</Link></div>
+                      <div className="nt-carousel-movie-title"><Link to={`/movie/${m.id.low}`}>{m.name}</Link></div>
                       {m.role ?
                         <div className="nt-carousel-movie-role">{m.role}</div>
                         : null

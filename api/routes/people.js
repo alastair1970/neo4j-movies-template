@@ -108,8 +108,7 @@ exports.getBaconPeople = function (req, res, next) {
 exports.findById = function (req, res, next) {
   const id = req.params.id;
   if (!id) throw {message: 'Invalid id', status: 400};
-
-  People.getById(dbUtils.getSession(req), id)
+  People.getById(dbUtils.getSession(req), req.params.id)
     .then(response => writeResponse(res, response))
     .catch(next);
 };

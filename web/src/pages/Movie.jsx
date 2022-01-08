@@ -8,7 +8,6 @@ import * as MovieActions from '../redux/actions/MovieActions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-
 class Movie extends React.Component {
   componentDidMount() {
     var {id} = this.props.match.params;
@@ -18,7 +17,6 @@ class Movie extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       this.props.clearMovie();
-
       var {id} = this.props.match.params;
       this.props.getMovie(id);
     }
@@ -44,7 +42,7 @@ class Movie extends React.Component {
             <div className="row">
               <div className="small-12 medium-4 columns nt-movie-aside">
                 <img className="nt-movie-poster"
-                     src={movie.posterImage}
+                     src={movie.poster_image}
                      alt="" />
                 <div className="nt-box">
                   <div className="nt-box-title">
@@ -131,11 +129,11 @@ class Movie extends React.Component {
         {
           actors.map(a => {
             return (
-              <div key={a.id}>
-                <Link to={`/person/${a.id}`}>
-                  <img src={a.posterImage} alt="" />
+              <div key={a.id.low}>
+                <Link to={`/person/${a.id.low}`}>
+                  <img src={a.poster_image} alt="" />
                 </Link>
-                <div className="nt-carousel-actor-name"><Link to={`/person/${a.id}`}>{a.name}</Link></div>
+                <div className="nt-carousel-actor-name"><Link to={`/person/${a.id.low}`}>{a.name}</Link></div>
                 <div className="nt-carousel-actor-role">{a.role}</div>
               </div>
             );
@@ -156,7 +154,7 @@ class Movie extends React.Component {
             return (
               <div key={m.id}>
                 <Link to={`/movie/${m.id}`}>
-                  <img src={m.posterImage} alt="" />
+                  <img src={m.poster_image} alt="" />
                 </Link>
                 <div className="nt-carousel-movie-title">
                   <Link to={`/movie/${m.id}`}>{m.title}</Link>

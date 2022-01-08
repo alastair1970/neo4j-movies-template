@@ -15,7 +15,6 @@ export default class MoviesApi {
         var movieGenres = _.filter(genres, g => {
           return genreNames.indexOf(g.name) > -1;
         });
-
         return Promise.all(
           movieGenres.map(genre => {
               return axios.get(`${apiBaseURL}/movies/genre/${genre.id}/`);
@@ -26,7 +25,6 @@ export default class MoviesApi {
             genreResults.forEach((movies, i) => {
               result[movieGenres[i].name] = movies;
             });
-
             return result;
           });
       });
@@ -35,9 +33,9 @@ export default class MoviesApi {
   // convert this to top 3 most rated movies
   static getFeaturedMovies() {
     return Promise.all([
-      axios.get(`${apiBaseURL}/movies/1`),
-      axios.get(`${apiBaseURL}/movies/2`),
-      axios.get(`${apiBaseURL}/movies/3`)
+      axios.get(`${apiBaseURL}/movies/28`),
+      axios.get(`${apiBaseURL}/movies/737`),
+      axios.get(`${apiBaseURL}/movies/471`)
     ]);
   }
 

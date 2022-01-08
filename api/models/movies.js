@@ -33,20 +33,16 @@ const _singleMovieWithDetails = function (record) {
   }
 };
 
-/**
- *  Query Functions
- */
+//Query Functions
 
 const _getByWriter = function (params, options, callback) {
   const cypher_params = {
     id: params.id
   };
-
   const query = [
-    'MATCH (:Person {tmdbId: $id})-[:WRITER_OF]->(movie:Movie)',
+    'MATCH (:Person {id: $id})-[:WRITER_OF]->(movie:Movie)',
     'RETURN DISTINCT movie'
   ].join('\n');
-
   callback(null, query, cypher_params);
 };
 
@@ -65,7 +61,7 @@ const getAll = function (session) {
 // get a single movie by id
 const getById = function (session, movieId, userId) {
   const query = [
-    'MATCH (movie:Movie {tmdbId: $movieId})',
+    'MATCH (movie:Movie {id: ToInteger($movieId)})',
     'OPTIONAL MATCH (movie)<-[my_rated:RATED]-(me:User {id: $userId})',
     'OPTIONAL MATCH (movie)<-[r:ACTED_IN]-(a:Person)',
     'OPTIONAL MATCH (related:Movie)<--(a:Person) WHERE related <> movie',
@@ -78,15 +74,14 @@ const getById = function (session, movieId, userId) {
     'genre, d, p, w, a, r, related, count(related) AS countRelated',
     'ORDER BY countRelated DESC',
     'RETURN DISTINCT movie,',
-    'my_rated.rating AS my_rating,',
+    'my_rated.rating     AS my_rating,',
     'collect(DISTINCT d) AS directors,',
     'collect(DISTINCT p) AS producers,',
     'collect(DISTINCT w) AS writers,',
-    'collect(DISTINCT{ name:a.name, id:a.tmdbId, poster_image:a.poster, role:r.role}) AS actors,',
+    'collect(DISTINCT{ name:a.name, id:a.id, poster_image:a.poster_image, role:r.role}) AS actors,',
     'collect(DISTINCT related) AS related,',
     'collect(DISTINCT genre) AS genres',
   ].join('\n');
-
   return session.readTransaction(txc =>
       txc.run(query, {
         movieId: movieId,
@@ -110,7 +105,6 @@ const getByDateRange = function (session, start, end) {
     'WHERE movie.released > $start AND movie.released < $end',
     'RETURN movie'
   ].join('\n');
-
   return session.readTransaction(txc =>
       txc.run(query, {
         start: parseInt(start || 0),
@@ -123,14 +117,11 @@ const getByDateRange = function (session, start, end) {
 // Get by date range
 const getByActor = function (session, id) {
   const query = [
-    'MATCH (actor:Person {tmdbId: $id})-[:ACTED_IN]->(movie:Movie)',
+    'MATCH (actor:Person {id: $id})-[:ACTED_IN]->(movie:Movie)',
     'RETURN DISTINCT movie'
   ].join('\n');
-
   return session.readTransaction(txc =>
-      txc.run(query, {
-        id: id
-      })
+    txc.run(query,{id: id})
     ).then(result => manyMovies(result))
 };
 
@@ -138,98 +129,90 @@ const getByActor = function (session, id) {
 const getByGenre = function(session, genreId) {
   const query = [
     'MATCH (movie:Movie)-[:HAS_GENRE]->(genre)',
-    'WHERE toLower(genre.name) = toLower($genreId) OR id(genre) = toInteger($genreId)', // while transitioning to the sandbox data             
+    'WHERE toLower(genre.name) = toLower($genreId) OR id(genre) = toInteger($genreId)', // while transitioning to the sandbox data
     'RETURN movie'
   ].join('\n');
-
   return session.readTransaction(txc =>
-      txc.run(query, {
-        genreId: genreId
-      })
+    txc.run(query,{genreId: genreId})
     ).then(result => manyMovies(result));
 };
 
 // Get many movies directed by a person
 const getByDirector = function(session, personId) {
   const query = [
-    'MATCH (:Person {tmdbId: $personId})-[:DIRECTED]->(movie:Movie)',
+    'MATCH (:Person {id: $personId})-[:DIRECTED]->(movie:Movie)',
     'RETURN DISTINCT movie'
   ].join('\n');
-
   return session.readTransaction(txc =>
-      txc.run(query, {
-        personId: personId
-      })
+    txc.run(query,{personId: personId})
     ).then(result => manyMovies(result));
 };
 
 // Get many movies written by a person
 const getByWriter = function(session, personId) {
   const query = [
-    'MATCH (:Person {tmdbId: $personId})-[:WRITER_OF]->(movie:Movie)',
+    'MATCH (:Person {id: $personId})-[:WRITER_OF]->(movie:Movie)',
     'RETURN DISTINCT movie'
   ].join('\n');
-
   return session.readTransaction(txc =>
-      txc.run(query, {
-        personId: personId
-      })
+    txc.run(query,{personId: personId})
     ).then(result => manyMovies(result));
 };
 
 const rate = function (session, movieId, userId, rating) {
+  const query = [
+    'MATCH (u:User {id: $userId}),(m:Movie {id: $movieId})',
+    'MERGE (u)-[r:RATED]->(m)',
+    'SET r.rating = $rating',
+    'RETURN m'
+  ].join('\n');
   return session.writeTransaction(txc =>
-    txc.run(
-      'MATCH (u:User {id: $userId}),(m:Movie {tmdbId: $movieId}) \
-      MERGE (u)-[r:RATED]->(m) \
-      SET r.rating = $rating \
-      RETURN m',
-      {
+    txc.run(query, {
         userId: userId,
-        movieId: movieId,
-        rating: parseInt(rating)
+        movieId: parseInt(movieId),
+        rating: rating
       }
     )
   );
 };
 
 const deleteRating = function (session, movieId, userId) {
+  const query = [
+    'MATCH (u:User {id: $userId})-[r:RATED]->(m:Movie {id: $movieId}) DELETE r' 
+  ].join('\n');
   return session.writeTransaction(txc =>
-    txc.run(
-      'MATCH (u:User {id: $userId})-[r:RATED]->(m:Movie {tmdbId: $movieId}) DELETE r',
-      {userId: userId, movieId: movieId}
-    )
+    txc.run(query,{userId: userId, movieId: parseInt(movieId)})
   );
 };
 
 const getRatedByUser = function (session, userId) {
+  const query = [
+    'MATCH (:User {id: $userId})-[rated:RATED]->(movie:Movie)',
+    'RETURN DISTINCT movie, rated.rating as my_rating' 
+  ].join('\n');
   return session.readTransaction(txc =>
-    txc.run(
-      'MATCH (:User {id: $userId})-[rated:RATED]->(movie:Movie) \
-       RETURN DISTINCT movie, rated.rating as my_rating',
-      {userId: userId}
-    )
+    txc.run(query,{userId: userId})
   ).then(result => {
     return result.records.map(r => new Movie(r.get('movie'), r.get('my_rating')))
   });
 };
 
 const getRecommended = function (session, userId) {
+  const query = [
+    'MATCH (me:User {id: $userId})-[my:RATED]->(m:Movie)',
+    'MATCH (other:User)-[their:RATED]->(m)',
+    'WHERE me <> other',
+    'AND abs(my.rating - their.rating) < 2',
+    'WITH other,m',
+    'MATCH (other)-[otherRating:RATED]->(movie:Movie)',
+    'WHERE movie <> m',
+    'WITH avg(otherRating.rating) AS avgRating, movie',
+    'RETURN movie',
+    'ORDER BY avgRating desc',
+    'LIMIT 25'
+  ].join('\n');  
   return session.readTransaction(txc =>
-    txc.run(
-      'MATCH (me:User {id: $userId})-[my:RATED]->(m:Movie) \
-      MATCH (other:User)-[their:RATED]->(m) \
-      WHERE me <> other \
-      AND abs(my.rating - their.rating) < 2 \
-      WITH other,m \
-      MATCH (other)-[otherRating:RATED]->(movie:Movie) \
-      WHERE movie <> m \
-      WITH avg(otherRating.rating) AS avgRating, movie \
-      RETURN movie \
-      ORDER BY avgRating desc \
-      LIMIT 25',
-      {userId: userId}
-    )
+    txc.run(query,{userId: userId})
   ).then(result => manyMovies(result));
 };
 

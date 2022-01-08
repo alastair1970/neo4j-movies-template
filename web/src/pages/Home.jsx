@@ -31,7 +31,7 @@ class Home extends React.Component {
             {this.renderFeatured()}
           </div>
           <div className="large-12 columns">
-            {this.renderByGenre('Adventure')}
+            {this.renderByGenre('Adventure')} 
             {this.renderByGenre('Drama')}
           </div>
         </div>
@@ -41,16 +41,15 @@ class Home extends React.Component {
 
   renderFeatured() {
     var {movies} = this.props;
-
     return (
       <div className="nt-home-featured">
         <h3 className="nt-home-header">Featured Movies</h3>
         <ul>
-          { _.compact(movies.featured).map(f => {
+          {_.compact(movies.featured).map(f => {
             return (
               <li key={f.id}>
                 <Link to={`/movie/${f.id}`}>
-                  <img src={f.posterImage} alt="" />
+                  {f.title}
                 </Link>
               </li>
             );
@@ -63,11 +62,9 @@ class Home extends React.Component {
   renderByGenre(name) {
     var {movies} = this.props;
     var moviesByGenre = movies.byGenre[name];
-
     if (_.isEmpty(moviesByGenre)) {
       return null;
     }
-
     return (
       <div className="nt-home-by-genre">
         <div className="nt-box">
@@ -75,12 +72,9 @@ class Home extends React.Component {
             {name}
           </div>
           <Carousel>
-            { moviesByGenre.map(m => {
+            {moviesByGenre.map(m => {
               return (
                 <div key={m.id}>
-                  <Link to={`/movie/${m.id}`}>
-                    <img src={m.posterImage} alt="" />
-                  </Link>
                   <div className="nt-carousel-movie-title">
                     <Link to={`/movie/${m.id}`}>{m.title}</Link>
                   </div>

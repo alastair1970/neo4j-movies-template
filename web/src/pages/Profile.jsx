@@ -61,7 +61,7 @@ class Profile extends React.Component {
                     return (
                       <div key={movie.id}>
                         <Link to={`/movie/${movie.id}`}>
-                          <img src={movie.posterImage} className="nt-profile-movie-cover" alt=""/>
+                          <img src={movie.poster_image} className="nt-profile-movie-cover" alt=""/>
                         </Link>
                         <div className="nt-profile-movie-title">
                           <Link to={`/movie/${movie.id}`}>
@@ -98,7 +98,7 @@ class Profile extends React.Component {
                       return (
                         <div key={m.id}>
                           <Link to={`/movie/${m.id}`}>
-                            <img src={m.posterImage} alt="" />
+                            <img src={m.poster_image} alt="" />
                           </Link>
                           <div className="nt-carousel-movie-title">
                             <Link to={`/movie/${m.id}`}>{m.title}</Link>
