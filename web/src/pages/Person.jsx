@@ -44,14 +44,8 @@ class Person extends React.Component {
                   src={detail.poster_image}
                   alt="" />
               </div>
-              <div className="small-12 medium-9 columns nt-person-main">
+              <div className="small-12 medium-12 columns nt-person-main">
                 <div>
-                  <div className="nt-box">
-                    <div className="nt-box-title">
-                      Bio
-                    </div>
-                  </div>
-
                   <div className="nt-box">
                     <div className="nt-box-title">
                       Related People
@@ -85,7 +79,9 @@ class Person extends React.Component {
                 <Link to={`/person/${a.id.low}`}>
                   <img src={a.poster_image} alt="" />
                 </Link>
-                <div className="nt-carousel-actor-name"><Link to={`/person/${a.id.low}`}>{a.name}</Link></div>
+                <div className="nt-carousel-actor-name">
+                  <Link to={`/person/${a.id.low}`}>{a.name}</Link>
+                </div>
                 <div className="nt-carousel-actor-role">{a.role}</div>
               </div>
             );

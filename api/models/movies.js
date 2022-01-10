@@ -216,6 +216,22 @@ const getRecommended = function (session, userId) {
   ).then(result => manyMovies(result));
 };
 
+const setMovieState = function (session, movieId, state) {
+  const {tagline}=state;
+  const query = [
+    'MATCH (m:Movie {id: $movieId})',
+    'SET m.tagline = $tagline',
+    'RETURN m'
+  ].join('\n');
+  return session.writeTransaction(txc =>
+    txc.run(query, {
+        movieId: parseInt(movieId),
+        tagline: tagline
+      }
+    )
+  );
+};
+
 // export exposed functions
 module.exports = {
   getAll: getAll,
@@ -228,5 +244,6 @@ module.exports = {
   rate: rate,
   deleteRating: deleteRating,
   getRatedByUser: getRatedByUser,
-  getRecommended: getRecommended
+  getRecommended: getRecommended,
+  setMovieState: setMovieState
 };

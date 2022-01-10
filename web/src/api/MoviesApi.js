@@ -50,6 +50,11 @@ export default class MoviesApi {
   static deleteRating(id) {
     return axios.delete(`${apiBaseURL}/movies/${id}/rate`);
   }
+
+  static setMovieState(id, state) {
+    return axios.post(`${apiBaseURL}/movies/${id}/state`, {state});
+  }
+
 }
 
 

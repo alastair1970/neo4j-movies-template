@@ -430,3 +430,48 @@ exports.getRecommendedMovies = function (req, res, next) {
       .catch(next);
   })
 };
+
+/**
+ * @swagger
+ * /api/v0/movies/{id}/state:
+ *   post:
+ *     tags:
+ *     - movies
+ *     description: Set the properties of a Movie node
+ *     summary: Set the properties of a Movie node
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: id of the movie
+ *         in: path
+ *         required: true
+ *         type: integer
+ *       - name: body
+ *         in: body
+ *         type: object
+ *         schema:
+ *           properties:
+ *             state:
+ *               type: object
+ *       - name: Authorization
+ *         in: header
+ *         type: string
+ *         required: true
+ *         description: Token (token goes here)
+ *     responses:
+ *       200:
+ *         description: movie properties saved
+ *       400:
+ *         description: Error message(s)
+ *       401:
+ *         description: invalid / missing authentication
+ */
+ exports.setMovieState = function (req, res, next) {
+  loginRequired(req, res, () => {
+    const {state} = req.body ;
+    Movies.setMovieState(dbUtils.getSession(req), req.params.id, state)
+      .then(response => writeResponse(res, {}))
+      .catch(next);
+  });
+};

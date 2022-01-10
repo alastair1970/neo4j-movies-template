@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import Loading from '../components/Loading.jsx';
 import Carousel from '../components/Carousel.jsx';
+// import EditableText from '../components/EditableText.jsx';
 import UserRating from '../components/UserRating.jsx';
 import {Link} from 'react-router-dom';
 import * as MovieActions from '../redux/actions/MovieActions';
@@ -9,6 +10,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 class Movie extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {tagline: ''};
+    this.handleStateChange = this.handleStateChange.bind(this);
+  }
   componentDidMount() {
     var {id} = this.props.match.params;
     this.props.getMovie(id);
@@ -26,57 +32,51 @@ class Movie extends React.Component {
     this.props.clearMovie();
   }
 
+  handleStateChange(e,value) {
+    e.preventDefault();
+    this.setState({tagline:value});
+    // alert(this.state.tagline);
+  }
+  
+  setMovieState(id,state){
+    this.props.setMovieState(id,state);
+  }
+
   render() {
     var {isFetching, movie, rateMovie, deleteMovieRating, profile} = this.props;
-
     return (
       <div className="nt-movie">
         {isFetching ? <Loading/> : null}
         {movie ?
           <div>
             <div className="row">
-              <div className="large-12 columns">
-                <h2 className="nt-movie-title">{movie.title}</h2>
-              </div>
-            </div>
-            <div className="row">
-              <div className="small-12 medium-4 columns nt-movie-aside">
-                <img className="nt-movie-poster"
-                     src={movie.poster_image}
-                     alt="" />
-                <div className="nt-box">
-                  <div className="nt-box-title">
-                    Storyline
-                  </div>
-                  <p className="nt-box-row">
-                    <span>{movie.tagline}</span>
-                  </p>
-                </div>
-              </div>
               <div className="small-12 medium-8 columns nt-movie-main">
                 <div>
-                  {profile ?
-                    <div className="nt-box">
+                  <div className="nt-box">
+                    <button onClick={this.setMovieState.bind(this, movie.id, this.state)}>Save</button>
+                    <p className="nt-box-row">
+                      <strong>Movie ID: </strong><span>{movie.id}</span>
+                    </p>
+                    {profile
+                      ?
                       <p className="nt-box-row nt-movie-rating">
                         <strong>Your rating: </strong>
-                        <UserRating movieId={movie.id}
-                                    savedRating={movie.myRating}
-                                    onSubmitRating={rateMovie}
-                                    onDeleteRating={deleteMovieRating}/>
+                        <UserRating movieId={movie.id} savedRating={movie.myRating} onSubmitRating={rateMovie} onDeleteRating={deleteMovieRating}/>
                       </p>
-                    </div>
-                    :
-                    null
-                  }
-                  <div className="nt-box">
-                    <div className="nt-box-title">
-                      Movie Details
-                    </div>
+                      :
+                      null
+                    }
                     <p className="nt-box-row">
-                      <strong>Year: </strong><span>{movie.released}</span>
+                      <strong>Title: </strong>
+                      <input Value={movie.title} onChange={this.handleStateChange}/>
                     </p>
                     <p className="nt-box-row">
-                      <strong>Duration: </strong><span>{`${movie.duration} mins`}</span>
+                      <strong>Storyline: </strong>
+                      <input Value={movie.tagline} onChange={this.handleStateChange}/>
+                    </p>
+                    <p className="nt-box-row">
+                      <strong>Duration: </strong>
+                      <input Value={`${movie.duration} mins`} onChange={this.handleStateChange}/>
                     </p>
                     <p className="nt-box-row">
                       <strong>Genres: </strong>
@@ -87,15 +87,15 @@ class Movie extends React.Component {
                       <span>{this.renderPeople(movie.directors)}</span>
                     </p>
                   </div>
-                  <div className="nt-box">
-                    <div className="nt-box-title">
-                      Cast
-                    </div>
-                    <div>{this.renderCast(movie.actors)}</div>
-                  </div>
                 </div>
               </div>
               <div className="small-12 columns">
+                <div className="nt-box">
+                  <div className="nt-box-title">
+                    Cast
+                  </div>
+                  <div>{this.renderCast(movie.actors)}</div>
+                </div>
                 <div className="nt-box">
                   <div className="nt-box-title">
                     Related
@@ -185,7 +185,10 @@ class Movie extends React.Component {
     });
   }
 }
-Movie.displayName = 'Movie';
+
+// Movie.propTypes = {
+//   onSubmitState: PropTypes.func.isRequired,
+// };
 
 function mapStateToProps(state) {
   return {
@@ -201,3 +204,5 @@ function mapDispatchToProps(dispatch) {
 
 // Wrap the component to inject dispatch and state into it
 export default connect(mapStateToProps, mapDispatchToProps)(Movie);
+
+Movie.displayName = 'Movie';

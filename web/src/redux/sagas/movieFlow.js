@@ -11,6 +11,7 @@ export default function* movieFlow() {
     takeEvery(Types.MOVIE_DETAIL_GET_REQUEST, getMovie),
     takeEvery(Types.MOVIE_RATE, rateMovie),
     takeEvery(Types.MOVIE_DELETE_RATING, deleteRating),
+    takeEvery(Types.SET_MOVIE_STATE, setMovieState),
   ]);
 }
 
@@ -77,5 +78,16 @@ function* deleteRating(action) {
   }
   catch (error) {
     yield put(Actions.deleteMovieRatingFailure(error));
+  }
+}
+
+function* setMovieState(action) {
+  var {id,state} = action;
+  try {
+    const response = yield call(MoviesApi.setMovieState,id,state);
+    yield put(Actions.setMovieStateSuccess(response));
+  }
+  catch (error) {
+    yield put(Actions.setMovieStateFailure(error));
   }
 }

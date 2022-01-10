@@ -10,7 +10,8 @@ export default function* profileFlow() {
     takeEvery(Types.PROFILE_GET_RATINGS, getProfileRatings),
     takeEvery(Types.PROFILE_MOVIE_RATE, profileRateMovie),
     takeEvery(Types.PROFILE_MOVIE_DELETE_RATING, profileDeleteRating),
-    takeEvery(Types.PROFILE_GET_RECOMMENDATIONS, getProfileRecommendations)
+    takeEvery(Types.PROFILE_GET_RECOMMENDATIONS, getProfileRecommendations),
+    // takeEvery(Types.PROFILE_SET_MOVIE_STATE,profileSetMovieState)
   ]);
 }
 
@@ -67,3 +68,4 @@ function* getProfileRecommendations() {
     yield put(Actions.getProfileRecommendationsFailure(error));
   }
 }
+
