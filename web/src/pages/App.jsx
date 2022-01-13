@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-
 import Header from '../components/Header.jsx';
+// import Footer from '../components/Footer.jsx';
 import {getProfile} from '../redux/actions/ProfileActions';
 import UserSession from '../UserSession';
-// import Footer from '../components/Footer.jsx';
 import Breadcrumbs from '../components/Breadcrumbs.jsx';
 import NotificationContainer from '../components/common/NotificationContainer.jsx';
-
 import { connect } from 'react-redux';
 import "../styles/main.scss";
 

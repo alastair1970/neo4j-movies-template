@@ -217,19 +217,34 @@ const getRecommended = function (session, userId) {
 };
 
 const setMovieState = function (session, movieId, state) {
-  const {tagline}=state;
+  // const {rated,summary,tagline,title,id}=state;
+  var cypher='';
+  for(var name in state) {
+    cypher = cypher+"m."+name+"=$"+name+",";
+  }
+  cypher = cypher.substring(0, cypher.length - 1);
   const query = [
     'MATCH (m:Movie {id: $movieId})',
-    'SET m.tagline = $tagline',
+    'SET',
+    cypher,
     'RETURN m'
   ].join('\n');
+  if(state.duration!==undefined){state.duration=parseInt(state.duration);}
+  console.log(query);
+  console.log(state);
   return session.writeTransaction(txc =>
-    txc.run(query, {
-        movieId: parseInt(movieId),
-        tagline: tagline
-      }
+    txc.run(query,{...state,movieId: parseInt(movieId),movieId: parseInt(movieId)}
     )
   );
+  // {
+  //   movieId: parseInt(movieId),
+  //   rated: rated,
+  //   summary: summary,
+  //   tagline: tagline,
+  //   title: title,
+  //   // id: id
+  // }
+
 };
 
 // export exposed functions

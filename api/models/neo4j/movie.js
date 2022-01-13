@@ -1,5 +1,6 @@
 // extracts just the data from the query results
 
+const { isNumber } = require('lodash');
 const _ = require('lodash');
 
 const Movie = module.exports = function (_node, myRating) {
@@ -17,7 +18,9 @@ const Movie = module.exports = function (_node, myRating) {
   this.tagline = this.tagline;
 
   if (this.duration) { 
-    this.duration = this.duration.toNumber();
+    if(!isNumber(this.duration)){
+      this.duration = this.duration.toNumber();
+    }
   } else if (this.runtime) {
     this.duration = this.runtime.low;
   }

@@ -14,6 +14,7 @@ class Movie extends React.Component {
     super(props);
     this.state = {tagline: ''};
     this.handleStateChange = this.handleStateChange.bind(this);
+    this.setMovieState = this.setMovieState.bind(this);
   }
   componentDidMount() {
     var {id} = this.props.match.params;
@@ -32,14 +33,14 @@ class Movie extends React.Component {
     this.props.clearMovie();
   }
 
-  handleStateChange(e,value) {
-    e.preventDefault();
-    this.setState({tagline:value});
-    // alert(this.state.tagline);
+  handleStateChange(e,field) {
+    console.log(`Movie handleStateChange 'field: '+${field} 'value: '+${e.target.value}`);
+    this.setState({[field]:e.target.value});
   }
   
-  setMovieState(id,state){
-    this.props.setMovieState(id,state);
+  setMovieState(){
+    var {id} = this.props.match.params;
+    this.props.setMovieState(id,this.state);
   }
 
   render() {
@@ -53,7 +54,7 @@ class Movie extends React.Component {
               <div className="small-12 medium-8 columns nt-movie-main">
                 <div>
                   <div className="nt-box">
-                    <button onClick={this.setMovieState.bind(this, movie.id, this.state)}>Save</button>
+                    <button onClick={() => this.setMovieState()}>Save</button>
                     <p className="nt-box-row">
                       <strong>Movie ID: </strong><span>{movie.id}</span>
                     </p>
@@ -68,15 +69,15 @@ class Movie extends React.Component {
                     }
                     <p className="nt-box-row">
                       <strong>Title: </strong>
-                      <input Value={movie.title} onChange={this.handleStateChange}/>
+                      <input Value={movie.title} onChange={(e)=>this.handleStateChange(e,"title")}/>
                     </p>
                     <p className="nt-box-row">
                       <strong>Storyline: </strong>
-                      <input Value={movie.tagline} onChange={this.handleStateChange}/>
+                      <input Value={movie.tagline} onChange={(e)=>this.handleStateChange(e,'tagline')}/>
                     </p>
                     <p className="nt-box-row">
                       <strong>Duration: </strong>
-                      <input Value={`${movie.duration} mins`} onChange={this.handleStateChange}/>
+                      <input Value={`${movie.duration} mins`} onChange={(e)=>this.handleStateChange(e,'duration')}/>
                     </p>
                     <p className="nt-box-row">
                       <strong>Genres: </strong>
