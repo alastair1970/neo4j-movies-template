@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 class Home extends React.Component {
   constructor() {
     super();
-
     this.renderFeatured = this.renderFeatured.bind(this);
     this.renderByGenre = this.renderByGenre.bind(this);
   }
@@ -86,6 +85,7 @@ class Home extends React.Component {
       </div>);
   }
 }
+
 Home.displayName = 'Home';
 
 function mapStateToProps(state) {

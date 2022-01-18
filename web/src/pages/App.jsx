@@ -22,10 +22,8 @@ class App extends React.Component {
 
     return (
       <div className="nt-app">
-        <Header auth={auth}
-                profile={profile}/>
-        <Breadcrumbs movie={movie}
-                     person={person}/>
+        <Header auth={auth} profile={profile}/>
+        <Breadcrumbs movie={movie} person={person}/>
         <div className="nt-app-page">
           {this.props.children}
         </div>
@@ -39,12 +37,14 @@ class App extends React.Component {
 App.displayName = 'App';
 App.propTypes = {
   movie: PropTypes.object,
+  // action: PropTypes.object,
   person: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
     movie: state.movies.detail,
+    // action: state.actions.detail,
     person: state.person.detail,
     auth: state.auth,
     profile: _.get(state.profile, 'profile', null)

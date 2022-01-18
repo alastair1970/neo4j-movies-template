@@ -4,6 +4,7 @@ import authFlow from './authFlow';
 import profileFlow from './profileFlow';
 import signupFlow from './signupFlow';
 import movieFlow from './movieFlow';
+import actionFlow from './actionFlow';
 import personFlow from './personFlow';
 
 export default function* root() {
@@ -13,6 +14,7 @@ export default function* root() {
     fork(profileFlow),
     fork(signupFlow),
     fork(movieFlow),
+    fork(actionFlow),
     fork(personFlow)
   ]);
 }

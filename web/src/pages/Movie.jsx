@@ -2,7 +2,6 @@ import React from 'react';
 import _ from 'lodash';
 import Loading from '../components/Loading.jsx';
 import Carousel from '../components/Carousel.jsx';
-// import EditableText from '../components/EditableText.jsx';
 import UserRating from '../components/UserRating.jsx';
 import {Link} from 'react-router-dom';
 import * as MovieActions from '../redux/actions/MovieActions';
@@ -37,7 +36,7 @@ class Movie extends React.Component {
     console.log(`Movie handleStateChange 'field: '+${field} 'value: '+${e.target.value}`);
     this.setState({[field]:e.target.value});
   }
-  
+
   setMovieState(){
     var {id} = this.props.match.params;
     this.props.setMovieState(id,this.state);
@@ -54,10 +53,6 @@ class Movie extends React.Component {
               <div className="small-12 medium-8 columns nt-movie-main">
                 <div>
                   <div className="nt-box">
-                    <button onClick={() => this.setMovieState()}>Save</button>
-                    <p className="nt-box-row">
-                      <strong>Movie ID: </strong><span>{movie.id}</span>
-                    </p>
                     {profile
                       ?
                       <p className="nt-box-row nt-movie-rating">
@@ -67,6 +62,11 @@ class Movie extends React.Component {
                       :
                       null
                     }
+
+                    <button onClick={() => this.setMovieState()}>Save</button>
+                    <p className="nt-box-row">
+                      <strong>Movie ID: </strong><span>{movie.id}</span>
+                    </p>
                     <p className="nt-box-row">
                       <strong>Title: </strong>
                       <input Value={movie.title} onChange={(e)=>this.handleStateChange(e,"title")}/>
@@ -124,7 +124,6 @@ class Movie extends React.Component {
     if (_.isEmpty(actors)) {
       return null;
     }
-
     return (
       <Carousel>
         {
@@ -147,7 +146,6 @@ class Movie extends React.Component {
     if (_.isEmpty(movies)) {
       return null;
     }
-
     return (
       <Carousel>
         {
@@ -186,10 +184,6 @@ class Movie extends React.Component {
     });
   }
 }
-
-// Movie.propTypes = {
-//   onSubmitState: PropTypes.func.isRequired,
-// };
 
 function mapStateToProps(state) {
   return {

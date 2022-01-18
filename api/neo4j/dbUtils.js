@@ -2,7 +2,6 @@
 
 // neo4j cypher helper module
 const nconf = require('../config');
-
 const neo4j = require('neo4j-driver');
 const driver = neo4j.driver(nconf.get('neo4j-local'), neo4j.auth.basic(nconf.get('USERNAME'), nconf.get('PASSWORD')));
 

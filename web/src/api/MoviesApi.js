@@ -39,21 +39,10 @@ export default class MoviesApi {
     ]);
   }
 
-  static getMovie(id) {
-      return axios.get(`${apiBaseURL}/movies/${id}`);
-  }
-
-  static rateMovie(id, rating) {
-    return axios.post(`${apiBaseURL}/movies/${id}/rate`, {rating});
-  }
-
-  static deleteRating(id) {
-    return axios.delete(`${apiBaseURL}/movies/${id}/rate`);
-  }
-
-  static setMovieState(id, state) {
-    return axios.post(`${apiBaseURL}/movies/${id}/state`, {state});
-  }
+  static getMovie            (id){ return axios.get   (`${apiBaseURL}/movies/${id}`); }
+  static rateMovie   (id, rating){ return axios.post  (`${apiBaseURL}/movies/${id}/rate`, {rating}); }
+  static deleteRating        (id){ return axios.delete(`${apiBaseURL}/movies/${id}/rate`); }
+  static setMovieState(id, state){ return axios.post  (`${apiBaseURL}/movies/${id}/state`, {state}); }
 
 }
 

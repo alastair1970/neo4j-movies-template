@@ -25,7 +25,6 @@ function createErrorNotification(err) {
           if (_.isArray(msg)) {
             msg = msg.join(' ');
           }
-
           errMessages.push(`${prop}: ${msg}`);
         }
       } catch (ex) {

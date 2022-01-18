@@ -8,25 +8,12 @@ const _singleMovieWithDetails = function (record) {
   if (record.length) {
     const result = {};
     _.extend(result, new Movie(record.get('movie'), record.get('my_rating')));
-
-    result.directors = _.map(record.get('directors'), record => {
-      return new Person(record);
-    });
-    result.genres = _.map(record.get('genres'), record => {
-      return new Genre(record);
-    });
-    result.producers = _.map(record.get('producers'), record => {
-      return new Person(record);
-    });
-    result.writers = _.map(record.get('writers'), record => {
-      return new Person(record);
-    });
-    result.actors = _.map(record.get('actors'), record => {
-      return record;
-    });
-    result.related = _.map(record.get('related'), record => {
-      return new Movie(record);
-    });
+    result.directors= _.map(record.get('directors'),record=>{ return new Person(record);});
+    result.genres   = _.map(record.get('genres')   ,record=>{ return new Genre(record);});
+    result.producers= _.map(record.get('producers'),record=>{return new Person(record);});
+    result.writers  = _.map(record.get('writers')  ,record=>{return new Person(record);});
+    result.actors   = _.map(record.get('actors')   ,record=>{return record;});
+    result.related  = _.map(record.get('related')  ,record=>{return new Movie(record);});
     return result;
   } else {
     return null;
@@ -34,7 +21,6 @@ const _singleMovieWithDetails = function (record) {
 };
 
 //Query Functions
-
 const _getByWriter = function (params, options, callback) {
   const cypher_params = {
     id: params.id
@@ -217,7 +203,6 @@ const getRecommended = function (session, userId) {
 };
 
 const setMovieState = function (session, movieId, state) {
-  // const {rated,summary,tagline,title,id}=state;
   var cypher='';
   for(var name in state) {
     cypher = cypher+"m."+name+"=$"+name+",";
@@ -233,18 +218,9 @@ const setMovieState = function (session, movieId, state) {
   console.log(query);
   console.log(state);
   return session.writeTransaction(txc =>
-    txc.run(query,{...state,movieId: parseInt(movieId),movieId: parseInt(movieId)}
+    txc.run(query,{...state,movieId: parseInt(movieId)}
     )
   );
-  // {
-  //   movieId: parseInt(movieId),
-  //   rated: rated,
-  //   summary: summary,
-  //   tagline: tagline,
-  //   title: title,
-  //   // id: id
-  // }
-
 };
 
 // export exposed functions
