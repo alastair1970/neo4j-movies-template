@@ -39,7 +39,7 @@ const Actions = require('../models/actions')
  *             $ref: '#/definitions/Action'
  */
 exports.list = function (req, res, next) {
-  Actions.getAll(dbUtils.getSession(req))
+  Actions.getAll(dbUtils.getSession(req), req.user.id)
     .then(response => writeResponse(res, response))
     .catch(next);
 };
@@ -159,7 +159,7 @@ exports.findActionsByDateRange = function (req, res, next) {
   loginRequired(req, res, () => {
     const {state} = req.body ;
     Actions.setActionState(dbUtils.getSession(req), req.params.id, state)
-      .then(response => writeResponse(res, {}))
+      .then(response => writeResponse(res, response))
       .catch(next);
   });
 };
@@ -199,7 +199,7 @@ exports.findActionsByDateRange = function (req, res, next) {
   loginRequired(req, res, () => {
     const {state} = req.body ;
     Actions.createNewAction(dbUtils.getSession(req), req.user.id, state)
-      .then(response => writeResponse(res, {}))
+      .then(response => writeResponse(res, response))
       .catch(next);
   });
 };

@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import Loading from '../components/Loading.jsx';
+import Carousel from '../components/Carousel.jsx';
 import * as ActionActions from '../redux/actions/ActionActions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -10,12 +12,20 @@ class action extends React.Component {
     super(props);
     this.state = {description: ''};
     this.handleStateChange = this.handleStateChange.bind(this);
-    this.setActionState    = this.setActionState.bind(this);
-    this.createNewAction   = this.createNewAction.bind(this);
+    this.setAction         = this.setAction.bind(this);
+    this.newAction         = this.newAction.bind(this);
+    // this.deleteAction      = this.deleteAction.bind(this);
+    this.renderActions     = this.renderActions.bind(this);
   }
+
+  componentWillUnmount() {
+    this.props.clearAction();
+  }
+
   componentDidMount() {
     var {id} = this.props.match.params;
     this.props.getAction(id);
+    this.props.getActions();
   }
 
   componentDidUpdate(prevProps) {
@@ -26,60 +36,92 @@ class action extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.clearAction();
-  }
-
   handleStateChange(e,field) {
     console.log(`action handleStateChange 'field: '+${field} 'value: '+${e.target.value}`);
     this.setState({[field]:e.target.value});
   }
 
-  setActionState(){
+  setAction(){
     var {id} = this.props.match.params;
-    this.props.setActionState(id,this.state);
+    this.props.setAction(id,this.state);
   }
 
-  createNewAction(){
-    this.props.createNewAction(this.state);
+  deleteAction(){
+    var {id} = this.props.match.params;
+    this.props.deleteAction(id);
+  }
+
+  newAction(){
+    this.props.newAction(this.state);
   }
 
   render() {
-    var {isFetching, action, profile} = this.props;
+    var {isFetching, detail, profile} = this.props;
     return (
       <div className="nt-action">
         {isFetching ? <Loading/> : null}
-        {action ?
-          <div>
-              {profile
+            {profile
                 ?
                 <div className="nt-box">
-                  <button onClick={() => this.setActionState()}>Save</button>
-                  <button onClick={() => this.createNewAction()}>New</button>
-                  <p className="nt-box-row">
-                    <strong>action ID: </strong><span>{action.id}</span>
-                  </p>
-                  <p className="nt-box-row">
-                    <strong>Description: </strong>
-                    <input Value={action.description} onChange={(e)=>this.handleStateChange(e,"description")}/>
-                  </p>
+                  <button onClick={() => this.setAction()}>Save</button>
+                  <button onClick={() => this.newAction()}>New</button>
+                  {detail ?
+                  <div>
+                    <p className="nt-box-row">
+                      <strong>action ID: </strong><span>{detail.id}</span>
+                    </p>
+                    <p className="nt-box-row">
+                      <strong>Description: </strong>
+                      <input Value={detail.description} onChange={(e)=>this.handleStateChange(e,"description")}/>
+                    </p>
+                  </div>
+                  :
+                  <div>
+                    <p className="nt-box-row">
+                      <strong>action ID: </strong><span>...</span>
+                    </p>
+                    <p className="nt-box-row">
+                      <strong>Description: </strong>
+                      <input Value='...' onChange={(e)=>this.handleStateChange(e,"description")}/>
+                    </p>
+                  </div>
+                  }
                 </div>
               :
               null
-              }
-            </div>
-          :
-          null
-        }
+            }
+        {this.renderActions()} 
       </div>
     );
   }
+
+  renderActions() {
+    var {actionsList} = this.props;
+    if (_.isEmpty(actionsList)) { return null; }
+    return (
+      <div className="nt-home-actions">
+        <div className="nt-box">
+          <Carousel>
+            {actionsList.map(m => {
+              return (
+                <div key={m.id}>
+                  <div className="nt-carousel-action-description">
+                    <Link to={`/action/${m.id}`}>{m.description}</Link>
+                  </div>
+                </div>
+              );
+            })}
+          </Carousel>
+        </div>
+      </div>
+      );
+    }
 }
 
 function mapStateToProps(state) {
   return {
-    action: state.actions.detail,
-    isFetching: state.actions.isFetching,
+    detail: state.actions.detail,
+    actionsList: state.actions.actionsList,
     profile: _.get(state, 'profile.profile')
   };
 }

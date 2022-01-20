@@ -10,10 +10,10 @@ const _singleMovieWithDetails = function (record) {
     _.extend(result, new Movie(record.get('movie'), record.get('my_rating')));
     result.directors= _.map(record.get('directors'),record=>{ return new Person(record);});
     result.genres   = _.map(record.get('genres')   ,record=>{ return new Genre(record);});
-    result.producers= _.map(record.get('producers'),record=>{return new Person(record);});
-    result.writers  = _.map(record.get('writers')  ,record=>{return new Person(record);});
-    result.actors   = _.map(record.get('actors')   ,record=>{return record;});
-    result.related  = _.map(record.get('related')  ,record=>{return new Movie(record);});
+    result.producers= _.map(record.get('producers'),record=>{ return new Person(record);});
+    result.writers  = _.map(record.get('writers')  ,record=>{ return new Person(record);});
+    result.actors   = _.map(record.get('actors')   ,record=>{ return record;});
+    result.related  = _.map(record.get('related')  ,record=>{ return new Movie(record);});
     return result;
   } else {
     return null;

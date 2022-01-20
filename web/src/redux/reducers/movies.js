@@ -4,9 +4,9 @@ const initialState = {
   isFetchingFeatured: false,
   isFetchingByGenre: false,
   isFetching: false,
+  detail: null,
   featured: [],
-  byGenre: {},
-  detail: null
+  byGenre: {}
 };
 
 export default function movies(state = initialState, action) {

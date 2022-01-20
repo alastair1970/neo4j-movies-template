@@ -5,13 +5,13 @@ import * as Types from '../actions/MovieActionTypes';
 
 export default function* movieFlow() {
   yield all([
-    takeEvery(Types.MOVIE_GENRES_GET_REQUEST, getGenres),
-    takeEvery(Types.MOVIES_BY_GENRES_GET_REQUEST, getMoviesByGenre),
-    takeEvery(Types.MOVIES_FEATURED_GET_REQUEST, getFeaturedMovies),
-    takeEvery(Types.MOVIE_DETAIL_GET_REQUEST, getMovie),
-    takeEvery(Types.MOVIE_RATE, rateMovie),
-    takeEvery(Types.MOVIE_DELETE_RATING, deleteRating),
-    takeEvery(Types.SET_MOVIE_STATE, setMovieState),
+    takeEvery(Types.MOVIE_GENRES_GET_REQUEST    , getGenres        ),
+    takeEvery(Types.MOVIES_BY_GENRES_GET_REQUEST, getMoviesByGenre ),
+    takeEvery(Types.MOVIES_FEATURED_GET_REQUEST , getFeaturedMovies),
+    takeEvery(Types.MOVIE_DETAIL_GET_REQUEST    , getMovie         ),
+    takeEvery(Types.MOVIE_RATE                  , rateMovie        ),
+    takeEvery(Types.MOVIE_DELETE_RATING         , deleteRating     ),
+    takeEvery(Types.SET_MOVIE_STATE             , setMovieState    ),
   ]);
 }
 

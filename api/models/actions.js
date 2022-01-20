@@ -27,7 +27,7 @@ const createNewAction = function (session, userId, state) {
     ' m.id=apoc.create.uuid()',
     ',c.created=TIMESTAMP()',
     ',m.created=TIMESTAMP()',
-    'RETURN m.id,m.description',
+    'RETURN m as action',
   ].join('\n');
   return session.readTransaction(txc =>
       txc.run(query, {
@@ -48,14 +48,14 @@ const createNewAction = function (session, userId, state) {
 const setActionState = function (session, actionId, state) {
   var cypher='';
   for(var name in state) {
-    cypher = cypher+"m."+name+"=$"+name+",";
+    cypher = cypher+"action."+name+"=$"+name+",";
   }
   cypher = cypher.substring(0, cypher.length - 1);
   const query = [
-    'MATCH (m:Action {id: $actionId})',
+    'MATCH (action:Action {id: $actionId})',
     'SET',
     cypher,
-    'RETURN m'
+    'RETURN action'
   ].join('\n');
   console.log(query);
   console.log(state);
@@ -67,8 +67,8 @@ const setActionState = function (session, actionId, state) {
 
 const deleteAction = function (session, actionId) {
   const query = [
-    'MATCH (n:Action {id: $actionId})',
-    'DETACH DELETE n'
+    'MATCH (action:Action {id: $actionId})',
+    'DETACH DELETE action'
   ].join('\n');
   return session.writeTransaction(txc =>
     txc.run(query,{userId: userId, actionId: actionId})
@@ -101,12 +101,11 @@ const getById = function (session, actionId, userId) {
 // get all actions
 const getAll = function (session,userId) {
   const query = [
-    'MATCH (action)<--(me:User {id: $userId})',
-    'RETURN DISTINCT action,',
+    'MATCH (action:Action)<--(me:User {id: $userId})',
+    'RETURN DISTINCT action',
   ].join('\n');
   return session.readTransaction(txc => (
       txc.run(query, {
-        actionId: actionId,
         userId: userId
       })
       ))

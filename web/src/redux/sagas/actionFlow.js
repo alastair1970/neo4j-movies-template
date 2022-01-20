@@ -5,10 +5,11 @@ import * as Types from '../actions/ActionActionTypes';
 
 export default function* actionFlow() {
   yield all([
-    takeEvery(Types.ACTION_DETAIL_GET_REQUEST, getAction),
-    takeEvery(Types.SET_ACTION_STATE         , setActionState),
-    takeEvery(Types.CREATE_NEW_ACTION        , createNewAction),
-    takeEvery(Types.DELETE_ACTION            , deleteAction),
+    takeEvery(Types.GET_ACTION        , getAction   ),
+    takeEvery(Types.GET_ACTIONS       , getActions  ),
+    takeEvery(Types.SET_ACTION        , setAction   ),
+    takeEvery(Types.NEW_ACTION        , newAction   ),
+    takeEvery(Types.DELETE_ACTION     , deleteAction),
   ]);
 }
 
@@ -23,25 +24,25 @@ function* getAction(action) {
   }
 }
 
-function* setActionState(action) {
+function* setAction(action) {
   var {id,state} = action;
   try {
-    const response = yield call(ActionsApi.setActionState,id,state);
-    yield put(Actions.setActionStateSuccess(response));
+    const response = yield call(ActionsApi.setAction,id,state);
+    yield put(Actions.setActionSuccess(response));
   }
   catch (error) {
-    yield put(Actions.setActionStateFailure(error));
+    yield put(Actions.setActionFailure(error));
   }
 }
 
-function* createNewAction(action) {
+function* newAction(action) {
   var {state} = action;
   try {
-    const response = yield call(ActionsApi.createNewAction,state);
-    yield put(Actions.createNewActionSuccess(response));
+    const response = yield call(ActionsApi.newAction,state);
+    yield put(Actions.newActionSuccess(response));
   }
   catch (error) {
-    yield put(Actions.createNewActionFailure(error));
+    yield put(Actions.newActionFailure(error));
   }
 }
 
@@ -53,5 +54,15 @@ function* deleteAction(action) {
   }
   catch (error) {
     yield put(Actions.deleteActionFailure(error));
+  }
+}
+
+function* getActions() {
+  try {
+    const response = yield call(ActionsApi.getActions);
+    yield put(Actions.getActionsSuccess(response));
+  }
+  catch (error) {
+    yield put(Actions.getActionsFailure(error));
   }
 }
