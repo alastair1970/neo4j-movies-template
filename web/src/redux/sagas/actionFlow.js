@@ -5,11 +5,11 @@ import * as Types from '../actions/ActionActionTypes';
 
 export default function* actionFlow() {
   yield all([
-    takeEvery(Types.GET_ACTION        , getAction   ),
-    takeEvery(Types.GET_ACTIONS       , getActions  ),
-    takeEvery(Types.SET_ACTION        , setAction   ),
-    takeEvery(Types.NEW_ACTION        , newAction   ),
-    takeEvery(Types.DELETE_ACTION     , deleteAction),
+    takeEvery(Types.GET_ACTION , getAction ),
+    takeEvery(Types.GET_ACTIONS, getActions),
+    takeEvery(Types.SET_ACTION , setAction ),
+    takeEvery(Types.NEW_ACTION , newAction ),
+    takeEvery(Types.DEL_ACTION , delAction ),
   ]);
 }
 
@@ -28,7 +28,7 @@ function* setAction(action) {
   var {id,state} = action;
   try {
     const response = yield call(ActionsApi.setAction,id,state);
-    yield put(Actions.setActionSuccess(response));
+    yield put(Actions.setActionSuccess(response,state));
   }
   catch (error) {
     yield put(Actions.setActionFailure(error));
@@ -46,14 +46,14 @@ function* newAction(action) {
   }
 }
 
-function* deleteAction(action) {
+function* delAction(action) {
   var {id} = action;
   try {
-    const response = yield call(ActionsApi.deleteAction,id);
-    yield put(Actions.deleteActionSuccess(response));
+    const response = yield call(ActionsApi.delAction,id);
+    yield put(Actions.delActionSuccess(id,response));
   }
   catch (error) {
-    yield put(Actions.deleteActionFailure(error));
+    yield put(Actions.delActionFailure(error));
   }
 }
 

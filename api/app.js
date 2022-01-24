@@ -71,7 +71,7 @@ api.get   ("/users/me"                    , routes.users.me);
 
 api.get   ("/actions"                     , routes.actions.list);
 api.get   ("/actions/:id"                 , routes.actions.findById);
-api.delete("/actions/:id"                 , routes.actions.deleteById);
+api.delete("/actions/:id"                 , routes.actions.deleteAction);
 api.post  ("/actions/:id/state"           , routes.actions.setActionState);
 api.post  ("/actions/create"              , routes.actions.createNewAction);
 

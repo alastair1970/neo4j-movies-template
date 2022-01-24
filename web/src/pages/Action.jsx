@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import Loading from '../components/Loading.jsx';
-import Carousel from '../components/Carousel.jsx';
 import * as ActionActions from '../redux/actions/ActionActions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -14,7 +13,7 @@ class action extends React.Component {
     this.handleStateChange = this.handleStateChange.bind(this);
     this.setAction         = this.setAction.bind(this);
     this.newAction         = this.newAction.bind(this);
-    // this.deleteAction      = this.deleteAction.bind(this);
+    this.delAction         = this.delAction.bind(this);
     this.renderActions     = this.renderActions.bind(this);
   }
 
@@ -46,9 +45,9 @@ class action extends React.Component {
     this.props.setAction(id,this.state);
   }
 
-  deleteAction(){
+  delAction(){
     var {id} = this.props.match.params;
-    this.props.deleteAction(id);
+    this.props.delAction(id);
   }
 
   newAction(){
@@ -60,36 +59,32 @@ class action extends React.Component {
     return (
       <div className="nt-action">
         {isFetching ? <Loading/> : null}
-            {profile
-                ?
-                <div className="nt-box">
-                  <button onClick={() => this.setAction()}>Save</button>
-                  <button onClick={() => this.newAction()}>New</button>
-                  {detail ?
-                  <div>
-                    <p className="nt-box-row">
-                      <strong>action ID: </strong><span>{detail.id}</span>
-                    </p>
-                    <p className="nt-box-row">
-                      <strong>Description: </strong>
-                      <input Value={detail.description} onChange={(e)=>this.handleStateChange(e,"description")}/>
-                    </p>
-                  </div>
-                  :
-                  <div>
-                    <p className="nt-box-row">
-                      <strong>action ID: </strong><span>...</span>
-                    </p>
-                    <p className="nt-box-row">
-                      <strong>Description: </strong>
-                      <input Value='...' onChange={(e)=>this.handleStateChange(e,"description")}/>
-                    </p>
-                  </div>
-                  }
-                </div>
-              :
-              null
-            }
+        <div className="nt-box">
+          <button onClick={() => this.setAction()}>Save</button>
+          <button onClick={() => this.newAction()}>New</button>
+          <button onClick={() => this.delAction()}>Delete</button>
+          {detail ?
+          <div>
+            <p className="nt-box-row">
+              <strong>action ID: </strong><span>{detail.id}</span>
+            </p>
+            <p className="nt-box-row">
+              <strong>Description: </strong>
+              <input Value={detail.description} onChange={(e)=>this.handleStateChange(e,"description")}/>
+            </p>
+          </div>
+          :
+          <div>
+            <p className="nt-box-row">
+              <strong>action ID: </strong><span>...</span>
+            </p>
+            <p className="nt-box-row">
+              <strong>Description: </strong>
+              <input Value='...' onChange={(e)=>this.handleStateChange(e,"description")}/>
+            </p>
+          </div>
+          }
+        </div>
         {this.renderActions()} 
       </div>
     );
@@ -101,17 +96,15 @@ class action extends React.Component {
     return (
       <div className="nt-home-actions">
         <div className="nt-box">
-          <Carousel>
-            {actionsList.map(m => {
-              return (
-                <div key={m.id}>
-                  <div className="nt-carousel-action-description">
-                    <Link to={`/action/${m.id}`}>{m.description}</Link>
-                  </div>
+          {actionsList.map(m => {
+            return (
+              <div key={m.id}>
+                <div className="nt-action-description">
+                  <Link to={`/action/${m.id}`}>{m.description ? (m.description):('...')}</Link>
                 </div>
-              );
-            })}
-          </Carousel>
+              </div>
+            );
+          })}
         </div>
       </div>
       );

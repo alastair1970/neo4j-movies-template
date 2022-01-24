@@ -232,8 +232,8 @@ exports.findActionsByDateRange = function (req, res, next) {
  *       404:
  *         description: action not found
  */
- exports.deleteById = function (req, res, next) {
-  Actions.deleteById(dbUtils.getSession(req), req.params.id, req.user.id)
+ exports.deleteAction = function (req, res, next) {
+  Actions.deleteAction(dbUtils.getSession(req), req.params.id, req.user.id)
     .then(response => writeResponse(res, response))
     .catch(next);
 };

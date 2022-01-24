@@ -57,8 +57,6 @@ const setActionState = function (session, actionId, state) {
     cypher,
     'RETURN action'
   ].join('\n');
-  console.log(query);
-  console.log(state);
   return session.writeTransaction(txc =>
     txc.run(query,{...state,actionId: actionId}
     )
@@ -68,11 +66,19 @@ const setActionState = function (session, actionId, state) {
 const deleteAction = function (session, actionId) {
   const query = [
     'MATCH (action:Action {id: $actionId})',
-    'DETACH DELETE action'
+    'DETACH DELETE action',
+    'RETURN COUNT(action) as d'
   ].join('\n');
   return session.writeTransaction(txc =>
-    txc.run(query,{userId: userId, actionId: actionId})
-  );
+    txc.run(query,{actionId: actionId})
+  ).then(result => {
+    if (!_.isEmpty(result.records)) {
+      return result.records[0].get('d');
+    } else {
+      throw {message: 'action delete failed', status: 404}
+    }
+  });
+;
 };
 
 // get a single action by id
