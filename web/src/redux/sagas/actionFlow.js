@@ -8,6 +8,7 @@ export default function* actionFlow() {
     takeEvery(Types.GET_ACTION , getAction ),
     takeEvery(Types.GET_ACTIONS, getActions),
     takeEvery(Types.SET_ACTION , setAction ),
+    takeEvery(Types.SAV_ACTION , savAction ),
     takeEvery(Types.NEW_ACTION , newAction ),
     takeEvery(Types.DEL_ACTION , delAction ),
   ]);
@@ -25,13 +26,23 @@ function* getAction(action) {
 }
 
 function* setAction(action) {
-  var {id,state} = action;
+  var {id, state} = action;
   try {
-    const response = yield call(ActionsApi.setAction,id,state);
-    yield put(Actions.setActionSuccess(response,state));
+    yield put(Actions.setActionSuccess({id,...state}));
   }
   catch (error) {
     yield put(Actions.setActionFailure(error));
+  }
+}
+
+function* savAction(action) {
+  var {id,state} = action;
+  try {
+    const response = yield call(ActionsApi.savAction,id,state);
+    yield put(Actions.savActionSuccess(response,state));
+  }
+  catch (error) {
+    yield put(Actions.savActionFailure(error));
   }
 }
 

@@ -9,9 +9,8 @@ import {connect} from 'react-redux';
 class action extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {description: ''};
     this.handleStateChange = this.handleStateChange.bind(this);
-    this.setAction         = this.setAction.bind(this);
+    this.setAction         = this.savAction.bind(this);
     this.newAction         = this.newAction.bind(this);
     this.delAction         = this.delAction.bind(this);
     this.renderActions     = this.renderActions.bind(this);
@@ -36,13 +35,13 @@ class action extends React.Component {
   }
 
   handleStateChange(e,field) {
-    console.log(`action handleStateChange 'field: '+${field} 'value: '+${e.target.value}`);
-    this.setState({[field]:e.target.value});
+    var {id} = this.props.detail;
+    this.props.setAction(id,{[field]:e.target.value});
   }
 
-  setAction(){
-    var {id} = this.props.match.params;
-    this.props.setAction(id,this.state);
+  savAction(){
+    var {id,description} = this.props.detail;
+    this.props.savAction(id,{description:description});
   }
 
   delAction(){
@@ -51,26 +50,27 @@ class action extends React.Component {
   }
 
   newAction(){
-    this.props.newAction(this.state);
+    var {description} = this.props.detail;
+    this.props.newAction({description:description});
   }
 
   render() {
-    var {isFetching, detail, profile} = this.props;
+    var {isFetching, detail} = this.props;
     return (
       <div className="nt-action">
         {isFetching ? <Loading/> : null}
         <div className="nt-box">
-          <button onClick={() => this.setAction()}>Save</button>
+          <button onClick={() => this.savAction()}>Save</button>
           <button onClick={() => this.newAction()}>New</button>
           <button onClick={() => this.delAction()}>Delete</button>
           {detail ?
           <div>
             <p className="nt-box-row">
-              <strong>action ID: </strong><span>{detail.id}</span>
+              <strong>action ID: </strong><span>{detail.id ?? ""}</span>
             </p>
             <p className="nt-box-row">
               <strong>Description: </strong>
-              <input Value={detail.description} onChange={(e)=>this.handleStateChange(e,"description")}/>
+              <input type="text" className="input-description" value={detail.description ?? ""} onChange={(e)=>this.handleStateChange(e,"description")}/>
             </p>
           </div>
           :
@@ -80,10 +80,10 @@ class action extends React.Component {
             </p>
             <p className="nt-box-row">
               <strong>Description: </strong>
-              <input Value='...' onChange={(e)=>this.handleStateChange(e,"description")}/>
+              <input type="text" className="input-description" value="..." onChange={(e)=>this.handleStateChange(e,"description")}/>
             </p>
           </div>
-          }
+          }  
         </div>
         {this.renderActions()} 
       </div>
@@ -100,7 +100,7 @@ class action extends React.Component {
             return (
               <div key={m.id}>
                 <div className="nt-action-description">
-                  <Link to={`/action/${m.id}`}>{m.description ? (m.description):('...')}</Link>
+                  <Link to={`/action/${m.id}`}>{m.description?(m.description):('...')}</Link>
                 </div>
               </div>
             );
