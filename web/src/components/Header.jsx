@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {logout} from '../redux/actions/AuthActions';
+import {logout} from '../redux/Auth/AuthActions';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import logoImg from '../assets/logo.png';

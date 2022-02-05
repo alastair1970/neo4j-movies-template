@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import Loading from '../components/Loading.jsx';
-import * as ActionActions from '../redux/actions/ActionActions';
+import * as ActionActions from '../redux/Action/ActionActions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -60,9 +60,9 @@ class action extends React.Component {
       <div className="nt-action">
         {isFetching ? <Loading/> : null}
         <div className="nt-box">
-          <button onClick={() => this.savAction()}>Save</button>
-          <button onClick={() => this.newAction()}>New</button>
-          <button onClick={() => this.delAction()}>Delete</button>
+          <button onClick={()=>this.savAction()}>Save</button>
+          <button onClick={()=>this.newAction()}>New</button>
+          <button onClick={()=>this.delAction()}>Delete</button>
           {detail ?
           <div>
             <p className="nt-box-row">

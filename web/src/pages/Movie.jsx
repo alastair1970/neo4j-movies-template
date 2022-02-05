@@ -4,7 +4,7 @@ import Loading from '../components/Loading.jsx';
 import Carousel from '../components/Carousel.jsx';
 import UserRating from '../components/UserRating.jsx';
 import {Link} from 'react-router-dom';
-import * as MovieActions from '../redux/actions/MovieActions';
+import * as MovieActions from '../redux/Movie/MovieActions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 

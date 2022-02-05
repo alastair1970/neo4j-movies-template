@@ -4,7 +4,7 @@ import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 import InputValidator from '../components/validation/InputValidator.jsx';
 import ValidatedComponent from '../components/validation/ValidatedComponent.jsx';
-import * as Actions from '../redux/actions/AuthActions';
+import * as Actions from '../redux/Auth/AuthActions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 

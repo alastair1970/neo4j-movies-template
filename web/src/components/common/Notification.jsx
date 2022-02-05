@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {NotificationType} from '../../redux/actions/NotificationActionTypes';
+import {NotificationType} from '../../redux/Notification/NotificationTypes';
 
 export default class Notification extends Component {
 

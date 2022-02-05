@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {createProfileInit} from '../redux/actions/ProfileActions';
+import {createProfileInit} from '../redux/Profile/ProfileActions';
 import {connect} from 'react-redux';
 
 class SignupStatus extends React.Component {

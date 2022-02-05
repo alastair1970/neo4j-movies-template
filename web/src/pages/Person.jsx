@@ -3,7 +3,7 @@ import _ from 'lodash';
 import Loading from '../components/Loading.jsx';
 import Carousel from '../components/Carousel.jsx';
 import { Link } from 'react-router-dom';
-import * as PersonActions from '../redux/actions/PersonActions';
+import * as PersonActions from '../redux/Person/PersonActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 

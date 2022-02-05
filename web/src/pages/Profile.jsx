@@ -6,7 +6,7 @@ import Carousel from '../components/Carousel.jsx';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import _ from 'lodash';
-import * as ProfileActions from '../redux/actions/ProfileActions';
+import * as ProfileActions from '../redux/Profile/ProfileActions';
 
 class Profile extends React.Component {
   componentDidMount() {
