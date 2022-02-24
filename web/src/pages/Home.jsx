@@ -4,7 +4,7 @@ import Loading from '../components/Loading.jsx';
 import Carousel from '../components/Carousel.jsx';
 import _ from 'lodash';
 
-import * as MovieActions from '../redux/Movie/MovieActions';
+import * as MovieActions from '../objects/Movie/MovieActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 

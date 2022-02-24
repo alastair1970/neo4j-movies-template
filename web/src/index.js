@@ -8,9 +8,9 @@ import createSagaMiddleware from 'redux-saga';
 import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from "history";
 
-import sagas from './redux/Index';
-import createRootReducer from './redux/Index/indexReducers';
-import Routes from './routes/Routes.jsx';
+import sagas from './objects/Index';
+import createRootReducer from './objects/Index/indexReducers';
+import Routes from './pages/Routes.jsx';
 
 const reduxLoggerMiddleware = createLogger();
 const sagaMiddleware = createSagaMiddleware();

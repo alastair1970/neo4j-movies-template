@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Header from '../components/Header.jsx';
 // import Footer from '../components/Footer.jsx';
-import {getProfile} from '../redux/Profile/ProfileActions';
+import {getProfile} from '../objects/Profile/ProfileActions';
 import UserSession from '../UserSession';
 import Breadcrumbs from '../components/Breadcrumbs.jsx';
 import NotificationContainer from '../components/common/NotificationContainer.jsx';
