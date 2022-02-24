@@ -1,10 +1,10 @@
 // actions.js
-const Actions = require('../models/actions')
+const Actions = require('./actionsModel')
   , _ = require('lodash')
-  , writeResponse = require('../helpers/response').writeResponse
-  , writeError = require('../helpers/response').writeError
-  , loginRequired = require('../middlewares/loginRequired')
-  , dbUtils = require('../neo4j/dbUtils');
+  , writeResponse = require('../../helpers/response').writeResponse
+  , writeError = require('../../helpers/response').writeError
+  , loginRequired = require('../../middlewares/loginRequired')
+  , dbUtils = require('../dbUtils');
 
 /**
  * @swagger

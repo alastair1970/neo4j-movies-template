@@ -1,6 +1,6 @@
 var writeError = require('../helpers/response').writeError;
-var Users = require('../models/users');
-var dbUtils = require('../neo4j/dbUtils');
+var Users = require('../objects/users/usersModels');
+var dbUtils = require('../objects/dbUtils');
 
 module.exports = function setAuthUser(req, res, next) {
   var authHeader = req.headers['authorization'];

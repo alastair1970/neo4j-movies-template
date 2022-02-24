@@ -3,8 +3,8 @@
 const uuid = require('node-uuid');
 const randomstring = require("randomstring");
 const _ = require('lodash');
-const dbUtils = require('../neo4j/dbUtils');
-const User = require('../models/neo4j/user');
+const dbUtils = require('../dbUtils');
+const User = require('./usersNeo4j');
 const crypto = require('crypto');
 
 const register = function (session, username, password) {

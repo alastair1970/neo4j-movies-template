@@ -33,7 +33,7 @@ var options = {
   // import swaggerDefinitions
   swaggerDefinition: swaggerDefinition,
   // path to the API docs
-  apis: ["./routes/*.js"],
+  apis: ["./objects/*/*Routes.js"],
 };
 
 // initialize swagger-jsdoc
@@ -88,9 +88,9 @@ api.post  ("/movies/:id/rate"             , routes.movies.rateMovie);
 api.post  ("/movies/:id/state"            , routes.movies.setMovieState);
 api.delete("/movies/:id/rate"             , routes.movies.deleteMovieRating);
 
-api.get   ("/people"                      , routes.people.list);
-api.get   ("/people/:id"                  , routes.people.findById);
-api.get   ("/people/bacon"                , routes.people.getBaconPeople);
+api.get   ("/people"                      , routes.persons.list);
+api.get   ("/people/:id"                  , routes.persons.findById);
+api.get   ("/people/bacon"                , routes.persons.getBaconPeople);
 api.get   ("/genres"                      , routes.genres.list);
 
 //api error handler

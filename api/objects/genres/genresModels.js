@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const Genre = require('../models/neo4j/genre');
+const Genre = require('./genresNeo4j');
 
 const getAll = function(session) {
   return session.readTransaction(txc =>

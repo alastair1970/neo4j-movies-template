@@ -1,8 +1,8 @@
 const _ = require('lodash');
-const dbUtils = require('../neo4j/dbUtils');
-const Movie = require('../models/neo4j/movie');
-const Person = require('../models/neo4j/person');
-const Genre = require('../models/neo4j/genre');
+const dbUtils = require('../dbUtils');
+const Movie = require('./moviesNeo4j');
+const Person = require('../persons/personsNeo4j');
+const Genre = require('../genres/genresNeo4j');
 
 const _singleMovieWithDetails = function (record) {
   if (record.length) {

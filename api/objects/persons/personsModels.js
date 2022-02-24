@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const Person = require('../models/neo4j/person');
+const Person = require('./personsNeo4j');
 
 const _singlePersonWithDetails = function (record) {
   if (record.length) {

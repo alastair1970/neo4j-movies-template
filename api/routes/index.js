@@ -1,7 +1,7 @@
 // convenience wrapper around all other files:
-exports.users   = require('./users');
-exports.site    = require('./site');
-exports.people  = require('./people');
-exports.movies  = require('./movies');
-exports.genres  = require('./genres');
-exports.actions = require('./actions');
+exports.site     = require('./site');
+exports.genres   = require('../objects/genres/genresRoutes');
+exports.actions  = require('../objects/actions/actionsRoutes');
+exports.movies   = require('../objects/movies/moviesRoutes');
+exports.persons  = require('../objects/persons/personsRoutes');
+exports.users    = require('../objects/users/usersRoutes');

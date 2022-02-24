@@ -1,9 +1,9 @@
 // movies.js
-const Users = require('../models/users')
-  , writeResponse = require('../helpers/response').writeResponse
-  , writeError = require('../helpers/response').writeError
-  , loginRequired = require('../middlewares/loginRequired')
-  , dbUtils = require('../neo4j/dbUtils')
+const Users = require('./usersModels')
+  , writeResponse = require('../../helpers/response').writeResponse
+  , writeError = require('../../helpers/response').writeError
+  , loginRequired = require('../../middlewares/loginRequired')
+  , dbUtils = require('../dbUtils')
   , _ = require('lodash');
 
 /**

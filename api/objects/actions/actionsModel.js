@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const Action = require('./neo4j/action');
+const Action = require('./actionsNeo4j');
 
 const _singleActionWithDetails = function (record) {
   if (record.length) {
