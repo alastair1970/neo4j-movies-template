@@ -2,7 +2,7 @@ require("dotenv").config();
 
 var express = require("express"),
   path = require("path"),
-  routes = require("./index"),
+  routes = require("./routes"),
   nconf = require("./config"),
   swaggerJSDoc = require("swagger-jsdoc"),
   swaggerUi = require("swagger-ui-express"),

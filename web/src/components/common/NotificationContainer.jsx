@@ -2,7 +2,7 @@ import React from 'react';
 import Notification from './Notification.jsx';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as NotificationActions from '../../objects/Notification/NotificationActions';
+import * as NotificationActions from '../../redux/Notification/NotificationActions';
 
 const NotificationContainer = ({dismiss, notifications}) => {
     return (

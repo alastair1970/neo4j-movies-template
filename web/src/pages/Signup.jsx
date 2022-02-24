@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import validatedComponent from '../components/validation/ValidatedComponent.jsx';
 import InputValidator from '../components/validation/InputValidator.jsx';
-import * as Actions from '../objects/Profile/ProfileActions';
+import * as Actions from '../redux/Profile/ProfileActions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
