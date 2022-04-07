@@ -12,7 +12,7 @@ export default class AuthApi {
     );
   }
 
-  static register(profile) {
+  static register_0(profile) {
     return axios.post(`${apiBaseURL}/register`, profile);
   }
 

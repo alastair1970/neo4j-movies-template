@@ -7,22 +7,14 @@ import {ValidatorContext} from './ValidatedComponent'
 class InputValidator extends React.Component {
   constructor() {
     super()
-
-    this.validation = {
-      isValid: true,
-      message: '',
-    }
-
-    this.state = {
-      message: '',
-    }
-
-    this.onBlurValidate = this.onBlurValidate.bind(this)
-    this.getRequiredErrorMsg = this.getRequiredErrorMsg.bind(this)
-    this.validate = this.validate.bind(this)
-    this.setValidationState = this.setValidationState.bind(this)
+    this.validation           = { isValid: true, message: '' }
+    this.state                = { message: '' }
+    this.onBlurValidate       = this.onBlurValidate.bind(this)
+    this.getRequiredErrorMsg  = this.getRequiredErrorMsg.bind(this)
+    this.validate             = this.validate.bind(this)
+    this.setValidationState   = this.setValidationState.bind(this)
     this.getValidationMessage = this.getValidationMessage.bind(this)
-    this.isValid = this.isValid.bind(this)
+    this.isValid              = this.isValid.bind(this)
   }
 
   getInput(props) {
@@ -32,7 +24,6 @@ class InputValidator extends React.Component {
 
   componentDidMount() {
     const {registerValidator} = this.props
-
     if (registerValidator) {
       registerValidator({
         owner: this,
@@ -66,22 +57,16 @@ class InputValidator extends React.Component {
     this.setState(state)
   }
 
-  getValidationMessage() {
-    return _.cloneDeep(this.validation.message)
-  }
+  getValidationMessage() { return _.cloneDeep(this.validation.message) }
 
-  isValid() {
-    return this.validation.isValid
-  }
+  isValid() {return this.validation.isValid }
 
   validate() {
     const {children, fieldName, required, onValidated, customValidation} = this.props
     const input = this.getInput()
     let message
-
     if (input) {
       const {value, type, required} = input.props
-
       if (required && !value && value !== 0 && value !== false) {
         message = this.getRequiredErrorMsg()
       } else if (type === 'email') {
@@ -99,19 +84,13 @@ class InputValidator extends React.Component {
       }
     }
 
-    if (required && !children.props.value) {
-      message = this.getRequiredErrorMsg()
-    }
+    if (required && !children.props.value) { message = this.getRequiredErrorMsg() }
 
-    if (!message && customValidation) {
-      message = customValidation()
-    }
+    if (!message && customValidation) { message = customValidation() }
 
     this.setValidationState(message)
 
-    if (onValidated) {
-      onValidated()
-    }
+    if (onValidated) { onValidated() }
   }
 
   getRequiredErrorMsg() {
@@ -120,7 +99,6 @@ class InputValidator extends React.Component {
 
   onBlurValidate() {
     this.validate()
-
     const {onBlurValidators} = this.props
     if (!_.isEmpty(onBlurValidators)) {
       onBlurValidators.forEach(validatorCmp => validatorCmp.validate && validatorCmp.validate())
@@ -130,7 +108,6 @@ class InputValidator extends React.Component {
   render() {
     const {props, state} = this
     const isChildInput = !!this.getInput()
-
     const children =
       isChildInput && props.shouldValidateOnBlur
         ? React.Children.map(props.children, child => {
@@ -154,12 +131,10 @@ class InputValidator extends React.Component {
 
   getErrorFromProps() {
     const {errors} = this.props
-
     if (errors) {
       if (Array.isArray(errors)) {
         return errors.join(', ')
       }
-
       return errors.toString()
     }
   }
@@ -200,7 +175,6 @@ export default props => (
         registerValidator,
         unregisterValidator,
       }
-
       if (forwardRef) {
         contextProps.ref = forwardRef
       }

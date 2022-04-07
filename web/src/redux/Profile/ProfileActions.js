@@ -4,10 +4,10 @@ export function getProfile()                              {return{type: Types.PR
 export function getProfileSuccess(payload)                {return{type: Types.PROFILE_GET_SUCCESS, payload};}
 export function getProfileFailure(error)                  {return{type: Types.PROFILE_GET_FAILURE, error};}
 
-export function createProfileInit()                       {return{type: Types.PROFILE_CREATE_INIT};}
-export function createProfile(payload)                    {return{type: Types.PROFILE_CREATE, payload};}
-export function createProfileSuccess(payload)             {return{type: Types.PROFILE_CREATE_SUCCESS, payload};}
-export function createProfileFailure(error)               {return{type: Types.PROFILE_CREATE_FAILURE, error};}
+export function createProfileInit_0()                       {return{type: Types.PROFILE_CREATE_INIT};}
+export function createProfile_0(payload)                    {return{type: Types.PROFILE_CREATE, payload};}
+export function createProfileSuccess_0(payload)             {return{type: Types.PROFILE_CREATE_SUCCESS, payload};}
+export function createProfileFailure_0(error)               {return{type: Types.PROFILE_CREATE_FAILURE, error};}
 
 export function createProfileInit_1()                       {return{type: Types.PROFILE_CREATE_INIT_1};}
 export function createProfile_1(payload)                    {return{type: Types.PROFILE_CREATE_1, payload};}

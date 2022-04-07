@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {createProfileInit,createProfileInit_1} from '../redux/Profile/ProfileActions';
+import {createProfileInit_0,createProfileInit_1} from '../redux/Profile/ProfileActions';
 
 class SignupStatus extends React.Component {
   componentWillMount() {
@@ -14,7 +14,7 @@ class SignupStatus extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.dispatch(createProfileInit());
+    this.props.dispatch(createProfileInit_0());
     // this.props.dispatch(createProfileInit_1());
   }
 

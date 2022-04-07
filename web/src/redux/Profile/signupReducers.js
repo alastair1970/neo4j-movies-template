@@ -5,7 +5,7 @@ function getInitialState() {
   return {
     isSaving_0: false,
     savedProfile_0: null,
-    errors: {}
+    errors_0: {}
   };
 }
 
@@ -28,7 +28,7 @@ export default function createProfile(state = getInitialState(), action) {
       return {
         isSaving_0: false,
         savedProfile_0: null,
-        errors: ErrorUtils.getApiErrors(action.error)
+        errors_0: ErrorUtils.getApiErrors(action.error)
       };
     default:
       return state;

@@ -37,8 +37,8 @@ class Signup extends React.Component {
     event.preventDefault();
     var {username, password} = this.state;
     if (this.props.isComponentValid()) {
-      this.props.createProfile({username, password});
-      this.props.createProfile_1({username, password});
+      this.props.createProfile_0({username, password});
+      // this.props.createProfile_1({username, password});
     }
   }
 
@@ -55,7 +55,7 @@ class Signup extends React.Component {
 
   render() {
     var {state} = this;
-    var {errors} = this.props;
+    var {errors_0} = this.props;
     return (
       <div className="ba-signup row">
         <form noValidate>
@@ -64,7 +64,7 @@ class Signup extends React.Component {
               <h3>Create an Account</h3>
             </div>
             <div className="row">
-              <InputValidator fieldName="User name" errors={errors.username} shouldValidateOnBlur={true}>
+              <InputValidator fieldName="User name" errors={errors_0.username} shouldValidateOnBlur={true}>
                 <input type="text"
                       name="name"
                       required
@@ -82,7 +82,7 @@ class Signup extends React.Component {
                      value={state.password}/>
             </div>
             <div className="row">
-              <InputValidator fieldName="Password" errors={errors.password} shouldValidateOnBlur={true} customValidation={() => {return this.validateConfirmPassword();}}>
+              <InputValidator fieldName="Password" errors={errors_0.password} shouldValidateOnBlur={true} customValidation={() => {return this.validateConfirmPassword();}}>
               <input type="password"
                      name="password-confirm"
                      placeholder="Confirm Password*"
@@ -114,7 +114,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return {...state.signup,   auth: {...state.auth}};
+  return {...state.signup, auth: {...state.auth}};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(validatedComponent(withRouter(Signup)));
