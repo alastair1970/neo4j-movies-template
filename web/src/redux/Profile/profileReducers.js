@@ -1,5 +1,20 @@
 import * as Types from './ProfileTypes';
 import {LOGOUT} from '../Auth/AuthTypes';
+import ErrorUtils from '../../utils/ErrorUtils';
+
+function getInitialState() {
+  return {
+    isFetching: false,
+    profile: null,
+    ratedMovies: [],
+    recommendedMovies: [],
+
+    isSaving_1: false,
+    savedProfile_1: null,
+    errors_1: {}
+
+  };
+}
 
 export default function profile(state = getInitialState(null), action) {
   switch (action.type) {
@@ -39,14 +54,28 @@ export default function profile(state = getInitialState(null), action) {
         isFetching: false,
         recommendedMovies: action.payload
       };
+
+      case Types.PROFILE_CREATE_INIT_1:
+        return getInitialState();
+      case Types.PROFILE_CREATE_1:
+        return {
+          ...state,
+          isSaving_1: true
+        };
+      case Types.PROFILE_CREATE_SUCCESS_1:
+        return {
+          ...state,
+          isSaving_1: false,
+          savedProfile_1: action.payload
+        };
+      case Types.PROFILE_CREATE_FAILURE_1:
+        return {
+          isSaving_1: false,
+          savedProfile_1: null,
+          errors_1: ErrorUtils.getApiErrors(action.error)
+        };
+  
   }
 }
 
-function getInitialState() {
-  return {
-    isFetching: false,
-    profile: null,
-    ratedMovies: [],
-    recommendedMovies: []
-  };
-}
+

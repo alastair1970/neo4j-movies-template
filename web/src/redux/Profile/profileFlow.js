@@ -1,8 +1,11 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
-import ProfileApi from './ProfileApi';
-import MoviesApi    from '../Movie/MoviesApi';
-import * as Actions from './ProfileActions';
-import * as Types from './ProfileTypes';
+import ProfileApi                  from './ProfileApi';
+import MoviesApi                   from '../Movie/MoviesApi';
+import AuthApi                     from '../Auth/AuthApi';
+import * as Actions                from './ProfileActions';
+import * as Types                  from './ProfileTypes';
+import * as AuthActions            from '../Auth/AuthActions';
+import { push }                    from 'connected-react-router'
 
 export default function* profileFlow() {
   yield all([
@@ -12,7 +15,22 @@ export default function* profileFlow() {
     takeEvery(Types.PROFILE_MOVIE_DELETE_RATING, profileDeleteRating),
     takeEvery(Types.PROFILE_GET_RECOMMENDATIONS, getProfileRecommendations),
     // takeEvery(Types.PROFILE_SET_MOVIE_STATE,profileSetMovieState)
+    takeEvery(Types.PROFILE_CREATE_1, createProfile_1),
+
   ]);
+}
+
+function* createProfile_1(action) {
+  var {payload} = action;
+  try {
+    const response = yield call(AuthApi.register_1, payload);
+    yield put(Actions.createProfileSuccess_1(response));
+    yield put(AuthActions.login(payload.username, payload.password));
+    yield put(push('/signup-status'));
+  }
+  catch (error) {
+    yield put(Actions.createProfileFailure_1(error));
+  }
 }
 
 function* getProfile() {

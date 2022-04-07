@@ -2,13 +2,12 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {createProfileInit} from '../redux/Profile/ProfileActions';
 import {connect} from 'react-redux';
+import {createProfileInit,createProfileInit_1} from '../redux/Profile/ProfileActions';
 
 class SignupStatus extends React.Component {
   componentWillMount() {
     var {profile} = this.props;
-
     if (!profile) {
       this.context.router.replace('/signup');
     }
@@ -16,11 +15,11 @@ class SignupStatus extends React.Component {
 
   componentWillUnmount() {
     this.props.dispatch(createProfileInit());
+    // this.props.dispatch(createProfileInit_1());
   }
 
   render() {
     var {profile} = this.props;
-
     return (
       <div className="ba-signup-status">
         {profile ?
@@ -55,7 +54,8 @@ SignupStatus.contextTypes = {
 
 function mapStateToProps(state) {
   return {
-    profile: _.get(state.signup, 'savedProfile')
+    profile: _.get(state.signup, 'savedProfile_0')
+    // profile: _.get(state.signup, 'savedProfile_1')
   };
 }
 

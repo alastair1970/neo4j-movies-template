@@ -1,21 +1,15 @@
-import React from 'react';
-import { withRouter } from 'react-router';
-import validatedComponent from '../components/validation/ValidatedComponent.jsx';
-import InputValidator from '../components/validation/InputValidator.jsx';
-import * as Actions from '../redux/Profile/ProfileActions';
+import React                from 'react';
+import {withRouter}         from 'react-router';
+import validatedComponent   from '../components/validation/ValidatedComponent.jsx';
+import InputValidator       from '../components/validation/InputValidator.jsx';
+import * as Actions         from '../redux/Profile/ProfileActions';
 import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import {connect}            from 'react-redux';
 
 class Signup extends React.Component {
   constructor() {
     super();
-
-    this.state = {
-      username: '',
-      password: '',
-      confirmPassword: ''
-    };
-
+    this.state = { username: '', password: '', confirmPassword: '' };
     this.createUser = this.createUser.bind(this);
     this.validateConfirmPassword = this.validateConfirmPassword.bind(this);
   }
@@ -33,8 +27,7 @@ class Signup extends React.Component {
     if (auth.token) {
       if (match.params.redirectTo) {
         history.push(match.params.redirectTo);
-      }
-      else {
+      } else {
         history.push('/');
       }
     }
@@ -43,9 +36,9 @@ class Signup extends React.Component {
   createUser(event) {
     event.preventDefault();
     var {username, password} = this.state;
-
     if (this.props.isComponentValid()) {
       this.props.createProfile({username, password});
+      this.props.createProfile_1({username, password});
     }
   }
 
@@ -71,15 +64,13 @@ class Signup extends React.Component {
               <h3>Create an Account</h3>
             </div>
             <div className="row">
-              <InputValidator fieldName="User name"
-                              errors={errors.username}
-                              shouldValidateOnBlur={true}>
-              <input type="text"
-                     name="name"
-                     required
-                     placeholder="User name*"
-                     value={state.username}
-                     onChange={this.onChange.bind(this, 'username')}/>
+              <InputValidator fieldName="User name" errors={errors.username} shouldValidateOnBlur={true}>
+                <input type="text"
+                      name="name"
+                      required
+                      placeholder="User name*"
+                      value={state.username}
+                      onChange={this.onChange.bind(this, 'username')}/>
               </InputValidator>
             </div>
             <div className="row">
@@ -91,10 +82,7 @@ class Signup extends React.Component {
                      value={state.password}/>
             </div>
             <div className="row">
-              <InputValidator fieldName="Password"
-                              errors={errors.password}
-                              shouldValidateOnBlur={true}
-                              customValidation={() => {return this.validateConfirmPassword();}}>
+              <InputValidator fieldName="Password" errors={errors.password} shouldValidateOnBlur={true} customValidation={() => {return this.validateConfirmPassword();}}>
               <input type="password"
                      name="password-confirm"
                      placeholder="Confirm Password*"
@@ -126,7 +114,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return {...state.signup,  auth: {...state.auth}};
+  return {...state.signup,   auth: {...state.auth}};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(validatedComponent(withRouter(Signup)));

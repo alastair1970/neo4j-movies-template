@@ -9,6 +9,11 @@ export function createProfile(payload)                    {return{type: Types.PR
 export function createProfileSuccess(payload)             {return{type: Types.PROFILE_CREATE_SUCCESS, payload};}
 export function createProfileFailure(error)               {return{type: Types.PROFILE_CREATE_FAILURE, error};}
 
+export function createProfileInit_1()                       {return{type: Types.PROFILE_CREATE_INIT_1};}
+export function createProfile_1(payload)                    {return{type: Types.PROFILE_CREATE_1, payload};}
+export function createProfileSuccess_1(payload)             {return{type: Types.PROFILE_CREATE_SUCCESS_1, payload};}
+export function createProfileFailure_1(error)               {return{type: Types.PROFILE_CREATE_FAILURE_1, error};}
+
 export function getProfileRatings()                       {return{type: Types.PROFILE_GET_RATINGS};}
 export function getProfileRatingsSuccess(payload)         {return{type: Types.PROFILE_GET_RATINGS_SUCCESS, payload};}
 export function getProfileRatingsFailure()                {return{type: Types.PROFILE_GET_RATINGS_FAILURE};}

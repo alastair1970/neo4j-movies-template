@@ -13,7 +13,6 @@ export default function* signupFlow() {
 
 function* createProfile(action) {
   var {payload} = action;
-
   try {
     const response = yield call(AuthApi.register, payload);
     yield put(Actions.createProfileSuccess(response));
