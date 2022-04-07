@@ -5,11 +5,7 @@ const {apiBaseURL} = settings;
 
 export default class AuthApi {
   static login(username, password) {
-    return axios.post(`${apiBaseURL}/login`,
-      {
-        username, password
-      }
-    );
+    return axios.post(`${apiBaseURL}/login`, { username, password } );
   }
 
   static register_0(profile) {

@@ -7,7 +7,7 @@ import { push }         from 'connected-react-router'
 
 export default function* signupFlow() {
   yield all([
-    takeEvery(Types.PROFILE_CREATE, createProfile_0),
+    takeEvery(Types.PROFILE_CREATE_0, createProfile_0),
   ]);
 }
 

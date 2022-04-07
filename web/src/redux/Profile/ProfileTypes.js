@@ -4,15 +4,15 @@ export const PROFILE_GET                         = 'PROFILE_GET';
 export const PROFILE_GET_SUCCESS                 = 'PROFILE_GET_SUCCESS';
 export const PROFILE_GET_FAILURE                 = 'PROFILE_GET_FAILURE';
 
-export const PROFILE_CREATE                      = 'PROFILE_CREATE';
-export const PROFILE_CREATE_SUCCESS              = 'PROFILE_CREATE_SUCCESS';
-export const PROFILE_CREATE_FAILURE              = 'PROFILE_CREATE_FAILURE';
-export const PROFILE_CREATE_INIT                 = 'PROFILE_CREATE_INIT';
+export const PROFILE_CREATE_0                    = 'PROFILE_CREATE_0';
+export const PROFILE_CREATE_SUCCESS_0            = 'PROFILE_CREATE_SUCCESS_0';
+export const PROFILE_CREATE_FAILURE_0            = 'PROFILE_CREATE_FAILURE_0';
+export const PROFILE_CREATE_INIT_0               = 'PROFILE_CREATE_INIT_0';
 
-export const PROFILE_CREATE_1                      = 'PROFILE_CREATE_1';
-export const PROFILE_CREATE_SUCCESS_1              = 'PROFILE_CREATE_SUCCESS_1';
-export const PROFILE_CREATE_FAILURE_1              = 'PROFILE_CREATE_FAILURE_1';
-export const PROFILE_CREATE_INIT_1                 = 'PROFILE_CREATE_INIT_1';
+export const PROFILE_CREATE_1                    = 'PROFILE_CREATE_1';
+export const PROFILE_CREATE_SUCCESS_1            = 'PROFILE_CREATE_SUCCESS_1';
+export const PROFILE_CREATE_FAILURE_1            = 'PROFILE_CREATE_FAILURE_1';
+export const PROFILE_CREATE_INIT_1               = 'PROFILE_CREATE_INIT_1';
 
 export const PROFILE_GET_RATINGS                 = 'PROFILE_GET_RATINGS';
 export const PROFILE_GET_RATINGS_SUCCESS         = 'PROFILE_GET_RATINGS_SUCCESS';

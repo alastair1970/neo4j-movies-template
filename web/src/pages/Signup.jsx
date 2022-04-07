@@ -56,6 +56,7 @@ class Signup extends React.Component {
   render() {
     var {state} = this;
     var {errors_0} = this.props;
+    // var {errors_1} = this.props;
     return (
       <div className="ba-signup row">
         <form noValidate>
@@ -64,7 +65,8 @@ class Signup extends React.Component {
               <h3>Create an Account</h3>
             </div>
             <div className="row">
-              <InputValidator fieldName="User name" errors={errors_0.username} shouldValidateOnBlur={true}>
+            <InputValidator fieldName="User name" errors={errors_0.username} shouldValidateOnBlur={true}>
+            {/* <InputValidator fieldName="User name" errors={errors_1.username} shouldValidateOnBlur={true}> */}
                 <input type="text"
                       name="name"
                       required
@@ -82,7 +84,9 @@ class Signup extends React.Component {
                      value={state.password}/>
             </div>
             <div className="row">
-              <InputValidator fieldName="Password" errors={errors_0.password} shouldValidateOnBlur={true} customValidation={() => {return this.validateConfirmPassword();}}>
+            <InputValidator fieldName="Password" errors={errors_0.password} shouldValidateOnBlur={true} 
+            // <InputValidator fieldName="Password" errors={errors_1.password} shouldValidateOnBlur={true} 
+            customValidation={() => {return this.validateConfirmPassword();}}>
               <input type="password"
                      name="password-confirm"
                      placeholder="Confirm Password*"

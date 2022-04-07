@@ -47,10 +47,8 @@ class SignupStatus extends React.Component {
   }
 }
 
-SignupStatus.displayName = 'SignupStatus';
-SignupStatus.contextTypes = {
-  router: PropTypes.object.isRequired
-};
+SignupStatus.displayName  = 'SignupStatus';
+SignupStatus.contextTypes = { router: PropTypes.object.isRequired };
 
 function mapStateToProps(state) {
   return {
