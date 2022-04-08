@@ -14,8 +14,8 @@ class SignupStatus extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.dispatch(createProfileInit_0());
-    // this.props.dispatch(createProfileInit_1());
+    // this.props.dispatch(createProfileInit_0());
+    this.props.dispatch(createProfileInit_1());
   }
 
   render() {
@@ -52,8 +52,8 @@ SignupStatus.contextTypes = { router: PropTypes.object.isRequired };
 
 function mapStateToProps(state) {
   return {
-    profile: _.get(state.signup, 'savedProfile_0')
-    // profile: _.get(state.signup, 'savedProfile_1')
+    // profile: _.get(state.signup, 'savedProfile_0')
+    profile: _.get(state.profile, 'savedProfile_1')
   };
 }
 

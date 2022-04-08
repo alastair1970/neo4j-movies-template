@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import { connectRouter } from 'connected-react-router'
-import signup            from '../Profile/signupReducers';
+// import signup            from '../Signup/signupReducers';
 import genres            from '../Movie/genresReducers';
 import notifications     from '../Notification/notificationsReducers';
 import auth              from '../Auth/authReducers';
@@ -13,7 +13,7 @@ const createRootReducer = (history) => combineReducers({
   router: connectRouter(history),
   notifications,
   auth,
-  signup,
+  // signup,
   profile,
   genres,
   movies,

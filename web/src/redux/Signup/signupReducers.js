@@ -1,4 +1,4 @@
-import * as Types from './ProfileTypes';
+import * as Types from '../Profile/ProfileTypes';
 import ErrorUtils from '../../utils/ErrorUtils';
 
 function getInitialState() {

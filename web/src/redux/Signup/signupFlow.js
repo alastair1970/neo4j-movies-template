@@ -1,7 +1,7 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
 import AuthApi          from '../Auth/AuthApi';
-import * as Actions     from './ProfileActions';
-import * as Types       from './ProfileTypes';
+import * as Actions     from '../Profile/ProfileActions';
+import * as Types       from '../Profile/ProfileTypes';
 import * as AuthActions from '../Auth/AuthActions';
 import { push }         from 'connected-react-router'
 
